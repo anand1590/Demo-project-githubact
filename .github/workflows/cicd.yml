@@ -28,7 +28,6 @@ jobs:
   security:
     name: Security Scan
     runs-on: ubuntu-latest
-    needs: compile
     steps:
     - uses: actions/checkout@v4
 
@@ -43,3 +42,9 @@ jobs:
     # Run Trivy Scan on filesystem
     - name: Run Trivy Scan
       run: trivy fs --format table -o fs-report.txt .
+    # Upload the Trivy report
+    - name: Upload Scan report
+      uses: actions/upload-artifact@v3
+      with:
+        name: security report
+        path: fs-report.txt
